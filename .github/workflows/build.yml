@@ -14,7 +14,7 @@ on:
     - feature/*  
   workflow_dispatch:
 
-name: Build and Test Code (Student Version)
+name: Build and Test Code
 
 jobs:
   build-artifacts:
@@ -31,6 +31,9 @@ jobs:
         submodules: recursive
         fetch-depth: 0
     
+    # -------------------------
+    # Java Environment Setup
+    # -------------------------
     - name: Set up Maven
       uses: stCarolas/setup-maven@v4
       with:
@@ -43,6 +46,9 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
     
+    # -------------------------
+    # Maven Build
+    # -------------------------
     - name: Build and Test Code
       run: |
         mvn clean compile test package
