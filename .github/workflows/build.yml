@@ -4,14 +4,14 @@ on:
     - main
     - develop
     - release-*
-    - feature/*  # Added for student branches
+    - feature/*  
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
     - main
     - develop
     - release-*
-    - feature/*  # Added for student branches
+    - feature/*  
   workflow_dispatch:
 
 name: Build and Test Code (Student Version)
@@ -31,24 +31,18 @@ jobs:
         submodules: recursive
         fetch-depth: 0
     
-    # -------------------------
-    # Java Environment Setup
-    # -------------------------
     - name: Set up Maven
       uses: stCarolas/setup-maven@v4
       with:
         maven-version: 3.9.3
     
-    - name: Set up JDK 11
+    - name: Set up JDK 23
       uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: 23
         distribution: 'temurin'
         cache: 'maven'
     
-    # -------------------------
-    # Maven Build (Simplified for Students)
-    # -------------------------
     - name: Build and Test Code
       run: |
         mvn clean compile test package
@@ -77,18 +71,10 @@ jobs:
         name: oscal-cli-jar
         path: cli-core/target/*.jar
     
-    # -------------------------
-    # Simple Code Quality Check
-    # -------------------------
-    - name: Check Code Compilation
-      run: |
-        echo "Checking if code compiles successfully..."
-        mvn compile
-        echo "✅ Code compilation successful!"
-    
     - name: Display Build Summary
+      if: always()
       run: |
-        echo "🎉 Build completed successfully!"
-        echo "📊 Test results available in artifacts"
-        echo "📦 JAR file built and uploaded"
-        ls -la cli-core/target/*.jar
+        echo "Build Analysis Complete"
+        echo "Checking for JAR files..."
+        find . -name "*.jar" -type f || echo "No JAR files found"
+        echo "Build process completed"
