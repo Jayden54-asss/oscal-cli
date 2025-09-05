@@ -31,9 +31,7 @@ jobs:
         submodules: recursive
         fetch-depth: 0
     
-    # -------------------------
-    # Java Environment Setup
-    # -------------------------
+   
     - name: Set up Maven
       uses: stCarolas/setup-maven@v4
       with:
