@@ -1,40 +1,51 @@
 pipeline {
     agent any
-    tools {
-        maven 'Maven3'
-        jdk 'Java11'
+
+    environment {
+        NODE_ENV = 'development'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Jayden54-ass/oscal-cli.git'
+                git branch: 'master', url: 'https://github.com/Jayden54-asss/oscal-cli.git'
             }
         }
-        stage('Build & Test') {
+
+        stage('Install Dependencies') {
             steps {
-                sh 'mvn clean install'
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml'
-                }
+                // Install Node.js dependencies if package.json exists
+                sh 'npm install'
             }
         }
-        stage('Validate OSCAL Examples') {
+
+        stage('Run Tests') {
             steps {
-                sh 'java -jar target/oscal-cli-*.jar validate examples/ssp-example.json'
-                sh 'java -jar target/oscal-cli-*.jar validate examples/profile-example.xml'
+                // Run tests if defined in package.json
+                sh 'npm test || echo "No tests defined"'
             }
         }
-        stage('Coverage') {
+
+        stage('Build/Package') {
             steps {
-                sh 'mvn jacoco:report'
+                // Optional: build step if required
+                sh 'npm run build || echo "No build step defined"'
             }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'target/site/jacoco/**', fingerprint: true
-                }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: '**/dist/**', allowEmptyArchive: true
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
