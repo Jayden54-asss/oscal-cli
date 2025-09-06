@@ -50,7 +50,7 @@ public class CatalogCommand
 
   @Override
   public String getDescription() {
-    return "Perform an operation on an OSCAL Catalog";
+    return "This command will perform an operation on an OSCAL Catalog";
   }
 
 }
