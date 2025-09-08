@@ -73,7 +73,7 @@ jobs:
       with:
         name: maven-build-report
         path: target/site/
-        
+
     # -------------------------
     # JAR Artifact
     # -------------------------
