@@ -50,18 +50,29 @@ jobs:
     # -------------------------
     # Maven Build & Reports
     # -------------------------
-    - name: Build, Test, and Coverage
+    - name: Build and Generate Reports
       run: |
-        mvn clean verify
+        mvn clean verify site
 
-    - name: Upload Test & Coverage Reports
+    # -------------------------
+    # Upload Surefire Test Reports
+    # -------------------------
+    - name: Upload Surefire Test Reports
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: reports
-        path: |
-          target/surefire-reports/
-          target/site/jacoco/
+        name: surefire-reports
+        path: target/surefire-reports/
+
+    # -------------------------
+    # Upload Maven Site Build Report
+    # -------------------------
+    - name: Upload Maven Build Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: maven-build-report
+        path: target/site/
 
     # -------------------------
     # JAR Artifact
