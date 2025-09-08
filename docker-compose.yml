@@ -1,0 +1,7 @@
+version: '3'
+services:
+  oscal:
+    build: .
+    volumes:
+      - ./:/app
+    tty: true
