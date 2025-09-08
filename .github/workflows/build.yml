@@ -74,8 +74,8 @@ jobs:
     - name: Upload JAR Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: oscal-cli-jar
-        path: cli-core/target/*.jar
+        name: cli-core-1.0.3.jar
+        path: target/*.jar
     
     - name: Display Build Summary
       if: always()
