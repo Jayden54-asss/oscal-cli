@@ -73,6 +73,16 @@ jobs:
       with:
         name: maven-build-report
         path: target/site/
+        
+    # -------------------------
+    # Upload Maven Build Log
+    # -------------------------
+    - name: Upload Maven Build Log
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: maven-build-log
+        path: build.log
 
     # -------------------------
     # JAR Artifact
